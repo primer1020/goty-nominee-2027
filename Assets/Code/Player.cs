@@ -4,58 +4,85 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private Vector3 startingPosition;
-    private Vector3 currentPosition;
-    private Vector3 velocity;
-    private bool wasOnGround;
-    private bool onGround;
+    [SerializeField] private Sprite[] _runningSprites;
+
+    private SpriteRenderer _spriteRenderer;
+
+    private Vector3 _startingPosition;
+    private Vector3 _currentPosition;
+    private Vector3 _velocity;
+
+    private bool _wasOnGround;
+    private bool _onGround;
+
+    private int _runAnimationIndex;
+    private float _runAnimationCycle;
 
     void Start()
     {
-        wasOnGround = true;
-        onGround = true;
-        velocity = new Vector3(0, 0, 0);
-        startingPosition = gameObject.transform.position;
-        currentPosition = startingPosition;
-    }
+        _spriteRenderer = GetComponent<SpriteRenderer>();
 
-    void ProcessJumping()
-    {
-        bool tryingToJump = Input.GetKeyDown(KeyCode.Space);
-        if (onGround && tryingToJump)
-        {
-            Debug.Log("Jumping!");
-            velocity.y += 2.0f;
-            onGround = false;
-        }
-    }
+        _startingPosition = gameObject.transform.position;
+        _currentPosition = _startingPosition;
+        _velocity = new Vector3(0, 0, 0);
 
-    void ProcessGravity()
-    {
-        velocity.y -= Time.deltaTime * 5;
-        if (currentPosition.y < startingPosition.y)
-        {
-            onGround = true;
-            velocity.y = 0;
-            currentPosition.y = startingPosition.y;
-        }
-    }
+        _wasOnGround = true;
+        _onGround = true;
 
-    void ProcessVelocity()
-    {
-        currentPosition += velocity * Time.deltaTime;
+        _runAnimationIndex = 0;
+        _runAnimationCycle = 0;
     }
 
     void Update()
     {
-        wasOnGround = onGround;
-        ProcessGravity();
-        ProcessJumping();
-        ProcessVelocity();
-        if (wasOnGround != onGround)
+        _wasOnGround = _onGround;
+        processGravity();
+        processJumping();
+        applyVelocity();
+        gameObject.transform.position = _currentPosition;
+
+        doAnimations();
+    }
+
+    private void processJumping()
+    {
+        bool tryingToJump = Input.GetKeyDown(KeyCode.Space);
+        if (_onGround && tryingToJump)
         {
-            Debug.Log(onGround);
+            Debug.Log("Jumping!");
+            _velocity.y += 2.0f;
+            _onGround = false;
         }
-        gameObject.transform.position = currentPosition;
+    }
+
+    private void processGravity()
+    {
+        _velocity.y -= Time.deltaTime * 5;
+        if (_currentPosition.y < _startingPosition.y)
+        {
+            _onGround = true;
+            _velocity.y = 0;
+            _currentPosition.y = _startingPosition.y;
+        }
+    }
+
+    private void applyVelocity()
+    {
+        _currentPosition += _velocity * Time.deltaTime;
+    }
+
+    private void doAnimations()
+    {
+        _runAnimationCycle += Time.deltaTime;
+        if (_runAnimationCycle > 0.1f) 
+        {
+            _runAnimationIndex++;
+            _runAnimationCycle = 0;
+        }
+
+        if (_onGround)
+            _spriteRenderer.sprite = _runningSprites[_runAnimationIndex % _runningSprites.Length];
+        else
+            _spriteRenderer.sprite = _runningSprites[_runningSprites.Length - 1];
     }
 }
