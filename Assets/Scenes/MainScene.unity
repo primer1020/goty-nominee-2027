@@ -428,6 +428,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49465f08e5316840a3b46cd4046b5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _runningSprites:
+  - {fileID: -1303980683, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: -1770239370, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: 513991062, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: -695327121, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: 374248985, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: -1493327587, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: 2020685646, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
+  - {fileID: -1434610782, guid: 9eb5d1fefa91b3d4a9d597d7c8eb06cf, type: 3}
 --- !u!1 &962006971
 GameObject:
   m_ObjectHideFlags: 0
