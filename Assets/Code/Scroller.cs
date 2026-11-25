@@ -13,12 +13,6 @@ public class Scroller : MonoBehaviour
     private GameObject rightClone;
     private Vector3 rightClonePosition;
 
-    public Vector3 GetBottomLeft()
-    {
-        Vector3 bottomLeft = activeCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0));
-        return bottomLeft;
-    }
-
     public Bounds GetBounds()
     {
         var renderers = GetComponentsInChildren<SpriteRenderer>();
@@ -51,7 +45,7 @@ public class Scroller : MonoBehaviour
 
     void Update()
     {
-        Vector3 bottomLeft = GetBottomLeft();
+        Vector3 bottomLeft = activeCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0));
 
         originalPosition.x -= Time.deltaTime * scrollSpeed;
         rightClonePosition.x -= Time.deltaTime * scrollSpeed;
