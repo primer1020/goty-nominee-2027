@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     private Vector3 _currentPosition;
     private Vector3 _velocity;
 
-    private bool _wasOnGround;
     private bool _onGround;
 
     private int _runAnimationIndex;
@@ -26,7 +25,6 @@ public class Player : MonoBehaviour
         _currentPosition = _startingPosition;
         _velocity = new Vector3(0, 0, 0);
 
-        _wasOnGround = true;
         _onGround = true;
 
         _runAnimationIndex = 0;
@@ -35,16 +33,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        _wasOnGround = _onGround;
-        processGravity();
-        processJumping();
-        applyVelocity();
+        ProcessGravity();
+        ProcessJumping();
+        ApplyVelocity();
         gameObject.transform.position = _currentPosition;
 
-        doAnimations();
+        DoAnimations();
     }
 
-    private void processJumping()
+    private void ProcessJumping()
     {
         bool tryingToJump = Input.GetKeyDown(KeyCode.Space);
         if (_onGround && tryingToJump)
@@ -55,7 +52,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void processGravity()
+    private void ProcessGravity()
     {
         _velocity.y -= Time.deltaTime * 5;
         if (_currentPosition.y < _startingPosition.y)
@@ -66,12 +63,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void applyVelocity()
+    private void ApplyVelocity()
     {
         _currentPosition += _velocity * Time.deltaTime;
     }
 
-    private void doAnimations()
+    private void DoAnimations()
     {
         _runAnimationCycle += Time.deltaTime;
         if (_runAnimationCycle > 0.1f) 
